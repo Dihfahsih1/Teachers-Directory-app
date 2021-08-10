@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView
-from .forms import ProfileImageUploadForm
+from .forms import ImageUploadForm
 
 from .models import Profile, Subject
 
@@ -48,12 +48,12 @@ class Uploader(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        form = ProfileImageUploadForm()
+        form = ImageUploadForm()
         return render(request, self.template_name, {'form': form})
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        form = ProfileImageUploadForm(request.POST, request.FILES)
+        form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             images_zip_file = request.FILES['zip_file']
             csv_file = request.FILES['csv_file']
