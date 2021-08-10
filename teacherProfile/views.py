@@ -43,7 +43,7 @@ class ProfileDetails(DetailView):
     model = Profile
 
 
-class ImporterView(View):
+class Uploader(View):
     template_name = 'profile/uploader.html'
 
     @method_decorator(login_required)
