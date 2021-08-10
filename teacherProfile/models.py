@@ -3,6 +3,9 @@ from django.db import models
 
 class Subject(models.Model):
     subject_name = models.CharField(max_length=100, null=False, unique=True)
+    
+    def __str__(self):
+        return self.subject_name
 
 
 class Profile(models.Model):
@@ -15,3 +18,6 @@ class Profile(models.Model):
                                    default='pictures/default/default.png')
 
     subjects = models.ManyToManyField(Subject)
+    
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
