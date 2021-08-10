@@ -3,15 +3,14 @@ import zipfile
 from django.core.files import File
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-import pandas as pd
 from django.contrib import messages
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, DetailView
 from .forms import ImageUploadForm
+import pandas as pd 
 
 from .models import Profile, Subject
-
 
 class Profiles(ListView):
     template_name = 'profile/profiles.html'
@@ -55,8 +54,8 @@ class Uploader(View):
     def post(self, request, *args, **kwargs):
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            images_zip_file = request.FILES['zip_file']
-            csv_file = request.FILES['csv_file']
+            images_zip_file = request.FILES['zip']
+            csv_file = request.FILES['csv']
             teacher_details = pd.read_csv(csv_file, delimiter=',')
             n_rows = len(teacher_details)
             teacher_details = teacher_details.dropna(subset=['First Name', 'Email Address'], how='any')
