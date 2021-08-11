@@ -12,6 +12,9 @@ import pandas as pd
 
 from .models import Profile, Subject
 
+def index(request):
+    return render(request, "index.html",context={})
+
 class Profiles(ListView):
     template_name = 'profile/profiles.html'
     model = Profile

@@ -4,7 +4,7 @@
 {% block content %}
 
 
-<div class="d-flex">
+<div class="container">
     <div class="mt-2"></div>
     <div class="col-sm-6 mt-4">
         <h1>Profiles</h1>
@@ -28,7 +28,7 @@
     </form>
 </div>
 
-<div class="row carditem">
+<div class="row card">
     {% for profile in profile_list %}
         <input type="hidden" name="profile_filter" value="filter_val" />
         <div class="col-md-3">

@@ -1,8 +1,9 @@
 from django.urls import path
-from teacherProfile.views import Profiles,ProfileDetails, Uploader
+from . import views
 
 urlpatterns = [
-    path('profiles/', Profiles.as_view(), name='profiles'),
-    path('profileDetails/<int:pk>/',ProfileDetails.as_view(), name='profileDetails'),
-    path('uploader/', Uploader.as_view(), name='uploader'),
+    path('',views.index, name='index'),
+    path('profiles/', views.Profiles.as_view(), name='profiles'),
+    path('profileDetails/<int:pk>/',views.ProfileDetails.as_view(), name='profileDetails'),
+    path('uploader/', views.Uploader.as_view(), name='uploader'),
 ]
