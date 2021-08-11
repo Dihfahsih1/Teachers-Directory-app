@@ -1,8 +1,7 @@
-*.pyc  
+*.cpython-38.pyc  
 *~  
 __pycache__  
  
-*.cpython-38.pyc
 db.sqlite3   
 
 # Byte-compiled / optimized / DLL files
@@ -130,3 +129,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+*.pyc
