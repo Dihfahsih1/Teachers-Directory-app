@@ -33,11 +33,13 @@ Currently hosted on Heroku:[https://teacherdirectoryapp.herokuapp.com/](https://
         python manage.py runserver
 
 8) In your browser type in the following to access the app
+
         http://localhost:8000/
 
         enter the username and the password you created above.
 
 9) To manage the app as the superadmin use the following link in your web browser
+
         http://localhost:8000/admin
 
 10) Finally you can customize the app the way you want by editing the files using any text editor of your choice.
