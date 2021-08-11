@@ -14,7 +14,7 @@ class Profile(models.Model):
     email = models.EmailField(max_length=254, null=False, unique=True)
     phone_number = models.CharField(max_length=20)
     room_number = models.CharField(max_length=5)
-    image_name = models.ImageField(upload_to='pictures', blank=True,
+    image_name = models.ImageField(upload_to='pictures/', blank=True,
                                    default='pictures/default/default.png')
 
     subjects = models.ManyToManyField(Subject)
