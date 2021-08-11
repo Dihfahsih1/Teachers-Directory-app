@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'teacherProfile',
-    'django_s3_storage',
+    'github_storages',
 ]
 
 MIDDLEWARE = [
@@ -67,10 +67,10 @@ DATABASES['default'].update(db_from_env)
 
 #github storage
 DEFAULT_FILE_STORAGE = "github_storages.backend.BackendStorages"
-GITHUB_HANDLE = "Dihfahsih1"
-ACCESS_TOKEN = "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"
-GITHUB_REPO_NAME = "Teachers-Directory-app"
-MEDIA_BUCKET_NAME = "images"
+GITHUB_HANDLE = "Pythonista1"
+ACCESS_TOKEN = "f284bcf2c4651226f99da98e821abfb98a24a610"
+GITHUB_REPO_NAME = "amazing"
+MEDIA_BUCKET_NAME = "media"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
