@@ -24,6 +24,13 @@ INSTALLED_APPS = [
     'github_storages',
 ]
 
+#github storage
+DEFAULT_FILE_STORAGE = "github_storages.backend.BackendStorages"
+GITHUB_HANDLE = "Pythonista1"
+ACCESS_TOKEN = "f284bcf2c4651226f99da98e821abfb98a24a610"
+GITHUB_REPO_NAME = "amazing"
+MEDIA_BUCKET_NAME = "media"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,12 +72,7 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 
-#github storage
-DEFAULT_FILE_STORAGE = "github_storages.backend.BackendStorages"
-GITHUB_HANDLE = "Pythonista1"
-ACCESS_TOKEN = "f284bcf2c4651226f99da98e821abfb98a24a610"
-GITHUB_REPO_NAME = "amazing"
-MEDIA_BUCKET_NAME = "media"
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
