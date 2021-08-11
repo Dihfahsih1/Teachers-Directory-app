@@ -5,6 +5,10 @@ import os
 from django.urls import reverse_lazy
 import django_on_heroku
 import dj_database_url
+import environ
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,11 +35,11 @@ INSTALLED_APPS = [
 # GITHUB_REPO_NAME = "Teachers-Directory-app"
 # MEDIA_BUCKET_NAME = "images"
 
-DEFAULT_FILE_STORAGE = "github_storages.backend.BackendStorages"
-GITHUB_HANDLE = "Pythonista1"
-ACCESS_TOKEN = "f284bcf2c4651226f99da98e821abfb98a24a610"
-GITHUB_REPO_NAME = "amazing"
-MEDIA_BUCKET_NAME = "media"
+DEFAULT_FILE_STORAGE = env("FILE_STORAGE")
+GITHUB_HANDLE = env("HANDLE")
+ACCESS_TOKEN = env("TOKEN")
+GITHUB_REPO_NAME = env("REPO")
+MEDIA_BUCKET_NAME = env("BUCKET_NAME")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
