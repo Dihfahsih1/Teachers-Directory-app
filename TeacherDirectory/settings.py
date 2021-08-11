@@ -26,10 +26,10 @@ INSTALLED_APPS = [
 
 #github storage
 DEFAULT_FILE_STORAGE = "github_storages.backend.BackendStorages"
-GITHUB_HANDLE = "Pythonista1"
-ACCESS_TOKEN = "f284bcf2c4651226f99da98e821abfb98a24a610"
-GITHUB_REPO_NAME = "amazing"
-MEDIA_BUCKET_NAME = "media"
+GITHUB_HANDLE = "Dihfahsih1"
+ACCESS_TOKEN = "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"
+GITHUB_REPO_NAME = "Teachers-Directory-app"
+MEDIA_BUCKET_NAME = "images"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
