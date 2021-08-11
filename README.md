@@ -1,5 +1,5 @@
 # Teachers-Directory-app
-[Currently hosted on Heroku](https://teacherdirectoryapp.herokuapp.com/)
+Currently hosted on Heroku:[https://teacherdirectoryapp.herokuapp.com/](https://teacherdirectoryapp.herokuapp.com/)
 
  How to run this app
  
@@ -18,15 +18,18 @@
 		
 		python manage.py makemigrations
 
-5) Run also the following command to apply the above migrations to the database        
+5) Run also the following command to apply the above migrations to the database 
+
 		python manage.py migrate
 		
 6) Create the super user of the app by running the following command
+
         python manage.py createsuperuser
 
         Enter the username, email and the password.
 		
 7) Use the following command to start the application
+
         python manage.py runserver
 
 8) In your browser type in the following to access the app
@@ -34,10 +37,9 @@
 
         enter the username and the password you created above.
 
-9)  To manage the app as the superadmin use the following link in your web browser
+9) To manage the app as the superadmin use the following link in your web browser
         http://localhost:8000/admin
 
 10) Finally you can customize the app the way you want by editing the files using any text editor of your choice.
 
-		
-4) Use Teachers.csv and teachers.zip for bulk upload. For any other csv files, follow the same format of the given Teachers.csv file.
+ 
