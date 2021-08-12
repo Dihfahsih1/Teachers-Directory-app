@@ -18,6 +18,5 @@ class Profile(models.Model):
                                    default='pictures/default/default.png')
 
     subjects = models.ManyToManyField(Subject)
-    
     def __str__(self):
         return self.first_name + ' ' + self.last_name

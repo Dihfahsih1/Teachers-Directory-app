@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'teacherProfile',
+    'csvs',
     'github_storages',
 ]
 
@@ -35,11 +36,11 @@ INSTALLED_APPS = [
 # GITHUB_REPO_NAME = "Teachers-Directory-app"
 # MEDIA_BUCKET_NAME = "images"
 
-DEFAULT_FILE_STORAGE = env("FILE_STORAGE")
-GITHUB_HANDLE = env("HANDLE")
-ACCESS_TOKEN = env("TOKEN")
-GITHUB_REPO_NAME = env("REPO")
-MEDIA_BUCKET_NAME = env("BUCKET_NAME")
+# DEFAULT_FILE_STORAGE = env("FILE_STORAGE")
+# GITHUB_HANDLE = env("HANDLE")
+# ACCESS_TOKEN = env("TOKEN")
+# GITHUB_REPO_NAME = env("REPO")
+# MEDIA_BUCKET_NAME = env("BUCKET_NAME")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -119,7 +120,7 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
