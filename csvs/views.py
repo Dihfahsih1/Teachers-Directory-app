@@ -3,21 +3,21 @@ from .forms import CsvUploadForm
 from teacherProfile.models import Profile, Subject
 from .models import Csv
 import csv
-
-
+from django_pandas.io import read_frame
 
 def Uploader(request):
-    form = CsvUploadForm(request.POST or None, request.FILES or None)
-    
-    if form.is_valid():
-        form.save
-        form = CsvUploadForm()
+    form = CsvUploadForm()
+    if request.method == 'POST':
+        form = CsvUploadForm(request.POST or None, request.FILES or None) 
+        if form.is_valid():
+            form.save()
         obj = Csv.objects.get(activate=False)
-        print(obj)
         
         with open(obj.file_name.path, 'r') as f:
-            reader = csv.reader(f)
-            print(reader)
+            df = read_frame('test.txt')
+
+            df.to_json('data.json')
+            reader = csv.reader(f) 
             
             for i, row in enumerate(reader): 
                 if i==0:
@@ -26,27 +26,25 @@ def Uploader(request):
                     row = "".join(row)
                     row = row.replace(";"," ")
                     row = row.split()
-                    print(row)
-                    first_name =row[0]
-                    last_name  =row[1]
-                    email=row[3]
-                    phone_number=row[4]
-                    room_number=row[5]
                     
-                    subjects = Subject.objects.get(subject_name=row[6])
+                    #subjects = Subject.objects.get(subject_name=row[0])
                     Profile.objects.create(
-                        first_name=first_name,
-                        last_name=last_name,
-                        email=email,
-                        phone_number=phone_number,
-                        room_number=room_number,
-                        subjects =subjects,
+                        first_name =row[0],
+                        last_name  =row[1],
+                        email=row[3],
+                        phone_number=row[4],
+                        room_number=row[5],
+                        #subjects =subjects,
                     )
             obj.activate=True
             obj.save
             return redirect('')
-        
+            
     return render(request, 'csvs/uploader.html', {'form': form})
+   
+
+        
+    
 
     # @method_decorator(login_required)
     # def get(self, request, *args, **kwargs):

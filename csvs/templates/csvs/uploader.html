@@ -14,17 +14,11 @@
     <div id="col-md-3">
         <h2 class="active"> Upload the bulk data here</h2> </br>
         <hr class="my-4">
-        <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="input-group mb-3">
-              <div class="custom-file">
+        <form action="{% url 'uploader' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}               
                 {{ form }}
                 <button type="submit" class="btn btn-primary">Confirm</button> 
-              </div>
-            </div>
-            {% if form.csv_file.errors %}
-              <div class="mb-3"> {{ form.csv_file.errors }} </div>
-            {% endif %}
+               
         </form>
     </div>
 
