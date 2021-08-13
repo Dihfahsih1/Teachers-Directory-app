@@ -4,43 +4,94 @@ from teacherProfile.models import Profile, Subject
 from .models import Csv
 import csv
 from django_pandas.io import read_frame
+from django.contrib import messages
+# import the logging library
+import logging
 
 def Uploader(request):
-    form = CsvUploadForm()
-    if request.method == 'POST':
-        form = CsvUploadForm(request.POST or None, request.FILES or None) 
-        if form.is_valid():
-            form.save()
-        obj = Csv.objects.get(activate=False)
-        
-        with open(obj.file_name.path, 'r') as f:
-            df = read_frame('test.txt')
+    if request.method =="GET":
+        form = CsvUploadForm()
+        return render(request, 'csvs/uploader.html', {'form': form})
+    
+    
+    try:
+        csv_file = request.FILES["file_name"]
+         
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request,'File is not CSV type')
+            return redirect('uploader')
+        #if file is too large, return
+        if csv_file.multiple_chunks():
+            messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
+            return redirect('uploader')
 
-            df.to_json('data.json')
-            reader = csv.reader(f) 
+        file_data = csv_file.read().decode("utf-8")
+        
+
+        lines = file_data.split("\n")
+        #loop over the lines and save them in db. If error , store as string and then display
+        for line in lines:
+            fields = line.split(",") 
+            data_dict = {}
+            data_dict["first_name"] = fields[0]
             
-            for i, row in enumerate(reader): 
-                if i==0:
-                    pass
+            data_dict["last_name"] = fields[1]
+            data_dict["email"] = fields[3]
+            data_dict["room_number"] = fields[4]
+            data_dict["phone_number"] = fields[5]
+            data_dict["subjects"] = fields[6]
+            
+            print(data_dict)
+            
+            try:
+                form = CsvUploadForm(data_dict)
+                if form.is_valid():
+                    form.save()
                 else:
-                    row = "".join(row)
-                    row = row.replace(";"," ")
-                    row = row.split()
-                    
-                    #subjects = Subject.objects.get(subject_name=row[0])
-                    Profile.objects.create(
-                        first_name =row[0],
-                        last_name  =row[1],
-                        email=row[3],
-                        phone_number=row[4],
-                        room_number=row[5],
-                        #subjects =subjects,
-                    )
-            obj.activate=True
-            obj.save
-            return redirect('')
+                    logging.getLogger("error_logger").error(form.errors.as_json())                                                
+            except Exception as e:
+                logging.getLogger("error_logger").error(form.errors.as_json())                    
+                pass
+
+    except Exception as e:
+        logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
+        messages.error(request,"Unable to upload file. "+repr(e))
+    return redirect('uploader')
+
+    # if request.method == 'POST':
+    #     form = CsvUploadForm(request.POST or None, request.FILES or None) 
+    #     if form.is_valid():
+    #         form.save()
+    #     obj = Csv.objects.get(activate=False)
+        
+    #     with open(obj.file_name.path, 'r') as f:
+    #         df = read_frame('test.txt')
+
+    #         df.to_json('data.json')
+    #         reader = csv.reader(f) 
             
-    return render(request, 'csvs/uploader.html', {'form': form})
+    #         for i, row in enumerate(reader): 
+    #             if i==0:
+    #                 pass
+    #             else:
+    #                 row = "".join(row)
+    #                 row = row.replace(";"," ")
+    #                 row = row.split()
+                    
+    #                 #subjects = Subject.objects.get(subject_name=row[0])
+    #                 Profile.objects.create(
+    #                     first_name =row[0],
+    #                     last_name  =row[1],
+    #                     email=row[3],
+    #                     phone_number=row[4],
+    #                     room_number=row[5],
+    #                     #subjects =subjects,
+    #                 )
+    #         obj.activate=True
+    #         obj.save
+    #         return redirect('')
+            
+    
    
 
         
