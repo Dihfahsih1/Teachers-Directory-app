@@ -29,7 +29,8 @@ def Uploader(request):
         
 
         lines = file_data.split("\n")
-        #loop over the lines and save them in db. If error , store as string and then display
+        
+        
         for line in lines:
             fields = line.split(",") 
             data_dict = {}
@@ -39,8 +40,7 @@ def Uploader(request):
             data_dict["email"] = fields[3]
             data_dict["room_number"] = fields[4]
             data_dict["phone_number"] = fields[5]
-            data_dict["subjects"] = fields[6]
-            
+            data_dict["subjects"] = fields[6]            
             print(data_dict)
             
             try:
