@@ -24,24 +24,21 @@ def Uploader(request):
         if csv_file.multiple_chunks():
             messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
             return redirect('uploader')
-
         file_data = csv_file.read().decode("utf-8")
-        
 
         lines = file_data.split("\n")
-        
         
         for line in lines:
             fields = line.split(",") 
             data_dict = {}
             data_dict["first_name"] = fields[0]
-            
             data_dict["last_name"] = fields[1]
             data_dict["email"] = fields[3]
             data_dict["room_number"] = fields[4]
             data_dict["phone_number"] = fields[5]
             data_dict["subjects"] = fields[6]            
             print(data_dict)
+            
             
             try:
                 form = CsvUploadForm(data_dict)
