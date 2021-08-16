@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} upload csv{% endblock title %} 
+{% block content %}
+    <style>
+        .errorlist li {
+        color:red;
+        }
+    </style>
+
+    <div style="display: block; height: 15%; color:'red'"></div>
+    <div style="display: block; margin-left: 30%; margin-right:30%">
+    <div id="col-md-3">
+        <h2 class="active"> Upload the bulk data here</h2> </br>
+        <hr class="my-4">
+        <form action="{% url 'uploader' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}               
+                {{ form }}
+                <button type="submit" class="btn btn-primary">Confirm</button> 
+               
+        </form>
+    </div>
+
+{% endblock %}
