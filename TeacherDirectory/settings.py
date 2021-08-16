@@ -31,12 +31,7 @@ INSTALLED_APPS = [
 ]
 
 #github storage
-# DEFAULT_FILE_STORAGE = "github_storages.backend.BackendStorages"
-# GITHUB_HANDLE = "Dihfahsih1"
-# ACCESS_TOKEN = "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"
-# GITHUB_REPO_NAME = "Teachers-Directory-app"
-# MEDIA_BUCKET_NAME = "images"
-
+ 
 # DEFAULT_FILE_STORAGE = env("FILE_STORAGE")
 # GITHUB_HANDLE = env("HANDLE")
 # ACCESS_TOKEN = env("TOKEN")
