@@ -1,8 +1,12 @@
+from io import StringIO
 from django.shortcuts import render, redirect
 from .forms import CsvUploadForm
 from teacherProfile.models import Profile, Subject
 from .models import Csv
-import csv, ast
+import csv, zipfile,base64
+from PIL import Image
+from zipfile import ZipFile
+from django.core.files import File
 from django_pandas.io import read_frame
 from django.contrib import messages
 # import the logging library
@@ -15,12 +19,33 @@ def Uploader(request):
         
         if form.is_valid():
             file = request.FILES.get('file_name')
-                                #"rb"
-            with open(str(file), encoding='utf-8') as f:
+            zipped_file = request.FILES.get('images_file')
+            
+            # opening the zip file in READ mode
+            with ZipFile(zipped_file, 'r') as zip:
+                # printing all the contents of the zip file
+                grabimages=zip.filelist
+                for i in grabimages:
+                    
+                    print(i.filename)
+                
+            
+                # extracting all the files
+                print('Extracting all the files now...')
+                #zip.extractall('')
+                print('Done!')
+             
+
+                                 
+            with open(str(file), encoding='utf-8') as f, ZipFile(zipped_file, 'r') as zip:
                 csvreader = csv.reader(f)
                 next(csvreader, None) #skip the headers
-                
+                grabimages=zip.filelist
+                for image in grabimages:
+                    get_image=image.filename
                 for row in csvreader:
+                    if get_image == row[2]:
+                        print(row[2])
                     if row[0] != 'first_name':            
                         profile, _ = Profile.objects.get_or_create(
                             first_name=row[0],
@@ -31,6 +56,7 @@ def Uploader(request):
                             room_number = row[5],
                             
                         )
+                        
                         subject_str = row[6]
                         subject, _ = Subject.objects.get_or_create(subject_name=subject_str)
                         profile.subjects.add(subject)
