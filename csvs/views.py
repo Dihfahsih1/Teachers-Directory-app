@@ -31,10 +31,9 @@ def Uploader(request):
                             room_number = row[5],
                             
                         )
-                        subject_str = row[6] 
-                        for subject_name in subject_str:
-                            subject, _ = Subject.objects.get_or_create(subject_name=subject_name)
-                            profile.subjects.add(subject)
+                        subject_str = row[6]
+                        subject, _ = Subject.objects.get_or_create(subject_name=subject_str)
+                        profile.subjects.add(subject)
             form.save()
             
         return redirect('uploader')
