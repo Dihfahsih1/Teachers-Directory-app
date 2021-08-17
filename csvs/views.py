@@ -2,58 +2,43 @@ from django.shortcuts import render, redirect
 from .forms import CsvUploadForm
 from teacherProfile.models import Profile, Subject
 from .models import Csv
-import csv
+import csv, ast
 from django_pandas.io import read_frame
 from django.contrib import messages
 # import the logging library
 import logging
-
+import codecs
 def Uploader(request):
-    if request.method =="GET":
-        form = CsvUploadForm()
-        return render(request, 'csvs/uploader.html', {'form': form})
-    
-    
-    try:
-        csv_file = request.FILES["file_name"]
-         
-        if not csv_file.name.endswith('.csv'):
-            messages.error(request,'File is not CSV type')
-            return redirect('uploader')
-        #if file is too large, return
-        if csv_file.multiple_chunks():
-            messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
-            return redirect('uploader')
-        file_data = csv_file.read().decode("utf-8")
-
-        lines = file_data.split("\n")
+    form = CsvUploadForm()
+    if request.method == 'POST':  
+        form = CsvUploadForm(request.POST or None, request.FILES or None)
         
-        for line in lines:
-            fields = line.split(",") 
-            data_dict = {}
-            data_dict["first_name"] = fields[0]
-            data_dict["last_name"] = fields[1]
-            data_dict["email"] = fields[3]
-            data_dict["room_number"] = fields[4]
-            data_dict["phone_number"] = fields[5]
-            data_dict["subjects"] = fields[6]            
-            print(data_dict)
+        if form.is_valid():
+            file = request.FILES.get('file_name')
+                                #"rb"
+            with open(str(file), encoding='utf-8') as f:
+                csvreader = csv.reader(f)
+                next(csvreader, None) #skip the headers
+                
+                for row in csvreader:
+                    if row[0] != 'first_name':            
+                        profile, _ = Profile.objects.get_or_create(
+                            first_name=row[0],
+                            last_name=row[1],
+                            image_name=row[2],
+                            email = row[3], 
+                            phone_number=row[4],
+                            room_number = row[5],
+                            
+                        )
+                        subject_str = row[6] 
+                        for subject_name in subject_str:
+                            subject, _ = Subject.objects.get_or_create(subject_name=subject_name)
+                            profile.subjects.add(subject)
+            form.save()
             
-            
-            try:
-                form = CsvUploadForm(data_dict)
-                if form.is_valid():
-                    form.save()
-                else:
-                    logging.getLogger("error_logger").error(form.errors.as_json())                                                
-            except Exception as e:
-                logging.getLogger("error_logger").error(form.errors.as_json())                    
-                pass
-
-    except Exception as e:
-        logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
-        messages.error(request,"Unable to upload file. "+repr(e))
-    return redirect('uploader')
+        return redirect('uploader')
+    return render(request, 'csvs/uploader.html', {'form': form})
 
     # if request.method == 'POST':
     #     form = CsvUploadForm(request.POST or None, request.FILES or None) 
