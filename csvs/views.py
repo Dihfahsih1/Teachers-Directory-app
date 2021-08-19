@@ -65,38 +65,7 @@ def Uploader(request):
         return redirect('uploader')
     return render(request, 'csvs/uploader.html', {'form': form})
 
-    # if request.method == 'POST':
-    #     form = CsvUploadForm(request.POST or None, request.FILES or None) 
-    #     if form.is_valid():
-    #         form.save()
-    #     obj = Csv.objects.get(activate=False)
-        
-    #     with open(obj.file_name.path, 'r') as f:
-    #         df = read_frame('test.txt')
-
-    #         df.to_json('data.json')
-    #         reader = csv.reader(f) 
-            
-    #         for i, row in enumerate(reader): 
-    #             if i==0:
-    #                 pass
-    #             else:
-    #                 row = "".join(row)
-    #                 row = row.replace(";"," ")
-    #                 row = row.split()
-                    
-    #                 #subjects = Subject.objects.get(subject_name=row[0])
-    #                 Profile.objects.create(
-    #                     first_name =row[0],
-    #                     last_name  =row[1],
-    #                     email=row[3],
-    #                     phone_number=row[4],
-    #                     room_number=row[5],
-    #                     #subjects =subjects,
-    #                 )
-    #         obj.activate=True
-    #         obj.save
-    #         return redirect('')
+ 
             
     
    
